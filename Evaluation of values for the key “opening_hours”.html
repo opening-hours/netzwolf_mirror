@@ -1,0 +1,249 @@
+<html xml:lang="de" xmlns="http://www.w3.org/1999/xhtml" xmlns:cal="http://www.w3.org/2002/12/cal/ical#" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><head profile="http://dublincore.org/documents/dcq-html/">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Target" content="_top">
+<meta http-equiv="Last-Modified" content="Sat, 05 Oct 2013 18:50:30 GMT">
+<title>Evaluation of values for the key “opening_hours”</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" type="text/css" href="Evaluation%20of%20values%20for%20the%20key%20%E2%80%9Copening_hours%E2%80%9D_files/default.css" media="screen,projection,print" title="Netzwolf default">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<link rel="schema.DCTERMS" href="http://purl.org/dc/terms/">
+<meta name="DCTERMS.modified" scheme="DCTERMS.W3CDTF" content="2012-02-01">
+<link rel="meta" href="http://www.netzwolf.info/x/icra.rdf" type="application/rdf+xml" title="ICRA labels">
+<link rel="copyright" title="Urheberrecht" href="http://www.netzwolf.info/_meta/anbieterkennzeichnung#copyright">
+<link href="http://www.netzwolf.info/en/cartography/osm/time_domain/form_hours?EXP=Mo-Fr%2010%3A00-20%3A00%2C%20Sa%20%22Nach%20Vereinbarung%22&amp;amp;DATE=20150214" rel="alternate" title="@www.netzwolf.info">
+<link rel="search" href="http://www.netzwolf.info/_katalog/suche">
+<link rel="help" href="http://www.netzwolf.info/_meta/hilfe_zur_nutzung">
+<script type="text/javascript" src="Evaluation%20of%20values%20for%20the%20key%20%E2%80%9Copening_hours%E2%80%9D_files/noframes.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+
+function Evaluate (offset, reset) {
+
+	document.forms.check.elements['rc'].value = '';
+	document.forms.check.elements['re'].value = '';
+	document.forms.check.elements['rr'].value = '';
+	document.forms.check.elements['rs'].value = '';
+	document.forms.check.elements['ru'].value = '';
+	document.forms.check.elements['rw'].value = '';
+
+	out = TimeDomain.createTimestamp (reset ? null : {
+		y: document.forms.check.elements['yyyy'].value,
+		m: document.forms.check.elements['mm'].selectedIndex+1,
+		d: document.forms.check.elements['dd'].value,
+		H: document.forms.check.elements['HH'].value,
+		M: document.forms.check.elements['MM'].value
+	}, offset);
+
+	function u2 (v) { return v>=0 && v<10 ? "0"+v : v; }
+
+	document.forms.check.elements['yyyy'].value = out.y;
+	document.forms.check.elements['mm'].selectedIndex = out.m-1;
+	document.forms.check.elements['dd'].value = u2(out.d);
+	document.forms.check.elements['HH'].value = u2(out.H);
+	document.forms.check.elements['MM'].value = u2(out.M);
+	document.forms.check.elements['wday'].value =
+		['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][out.w];
+	document.forms.check.elements['week'].value = out.wy+'W'+u2(out.yw);
+
+	var result = TimeDomain.evaluateInTime (document.forms.check.elements['expression'].value, out,
+				{region: document.forms.check.elements['region'].value});
+
+	document.forms.check.elements['rc'].value = result.comment;
+	document.forms.check.elements['re'].value = result.errors ? result.errors.join('; ') : '';
+	document.forms.check.elements['rr'].value = result.region || '';
+	document.forms.check.elements['rs'].value = result.value;
+	document.forms.check.elements['ru'].value = result.usedrule || '';
+	document.forms.check.elements['rw'].value = result.warnings ? result.warnings.join('; ') : '';
+}
+
+function EX (element) {
+	document.forms.check.elements['expression'].value=element.innerHTML;
+	Evaluate();
+	return false;
+}
+
+function permalink () {
+	var mmsel = document.getElementById('mm');
+
+	var yyyymmdd =	document.getElementById('yyyy').value +
+			mmsel.options[+mmsel.selectedIndex].value +
+			document.getElementById('dd').value;
+	var exp =	document.getElementById('expression').value;
+
+	var search='?EXP='+encodeURIComponent(exp)+'&DATE='+encodeURIComponent(yyyymmdd);
+
+	location = location.protocol+'//'+location.host+location.pathname+search;
+}
+
+window.onload = function () {Evaluate();};
+/*]]>*/</script>
+<script type="text/javascript" src="Evaluation%20of%20values%20for%20the%20key%20%E2%80%9Copening_hours%E2%80%9D_files/time_domain.js"></script>
+</head>
+
+<body>
+<div id="Xc">
+<h1>Evaluation of values for the key “opening_hours”</h1>
+
+<div class="Xa">
+Springe zu:
+<a href="#Xnp" accesskey="S">Seitenhierarchie</a>.
+</div>
+<form id="check" action="#">
+<p>
+<button type="button" onclick="Evaluate(-86400)">-1 Day</button>
+<button type="button" onclick="Evaluate(+86400)">+1 Day</button>
+<button type="button" onclick="Evaluate(-3600)">-1 Hour</button>
+<button type="button" onclick="Evaluate(+3600)">+1 Hour</button>
+<button type="button" onclick="Evaluate(-60)">-1 Minute</button>
+<button type="button" onclick="Evaluate(+60)">+1 Minute</button>
+<button type="button" onclick="Evaluate(0,true)">Now</button>
+</p>
+
+<p>
+Date and Time:<br>
+<input id="dd" size="3" name="dd" value="06" onblur="Evaluate()">.
+<select id="mm" name="mm" onchange="Evaluate()">
+<option value="01">January</option>
+<option value="02">February</option>
+<option value="03">March</option>
+<option value="04" selected="selected">April</option>
+<option value="05">May</option>
+<option value="06">June</option>
+<option value="07">July</option>
+<option value="08">August</option>
+<option value="09">September</option>
+<option value="10">October</option>
+<option value="11">November</option>
+<option value="12">December</option>
+</select>
+<input id="yyyy" size="5" name="yyyy" value="2015" onblur="Evaluate()">
+&nbsp;
+<input size="3" name="HH" value="14" onblur="Evaluate()">:<input size="3" name="MM" value="05" onblur="Evaluate()">
+&nbsp;
+<input value="Monday" size="10" name="wday" readonly="readonly">
+<input value="2015W15" size="7" name="week" readonly="readonly">
+Region:
+<input size="6" name="region" onblur="Evaluate()">
+</p>
+
+<p>
+Value for <q>opening_hours</q>:<br>
+<input id="expression" style="width:100%" name="expression" value="Mo-Fr 10:00-20:00, Sa &quot;Nach Vereinbarung&quot;" onblur="Evaluate()">
+</p>
+
+<p>
+Status:<br>
+<input value="true" size="6" name="rs" readonly="readonly">
+<input value="undefined" size="60" name="rc" readonly="readonly">
+<input size="6" name="rr" readonly="readonly">
+</p>
+
+<p>
+Substring used by applied rule:<br>
+<input value="Mo - Fr 10:00 - 20:00 , Sa &quot;Nach Vereinbarung&quot;" style="width: 100%" name="ru" readonly="readonly">
+</p>
+
+<p>
+Error and warning messages:<br>
+<input style="width: 100%" name="re" readonly="readonly"><br>
+<input value="No time specification, assuming 0:00-24:00 at &quot;Mo - Fr 10:00 - 20:00 , Sa ««»» &quot;Nach Vereinbarung&quot;&quot;" style="width: 100%" name="rw" readonly="readonly">
+</p>
+
+</form>
+
+<p style="text-align: right">
+<a href="#" onclick="permalink();return false">permalink</a>
+</p>
+
+<hr>
+
+<h2 id="examples">Examples:</h2>
+(Click top copy to the form and evaluate)
+<ol>
+<li><a href="#check" onclick="EX(this)">24/7</a></li>
+<li><a href="#check" onclick="EX(this)">"only after registration"</a></li>
+<li><a href="#check" onclick="EX(this)">14:00-15:00</a></li>
+<li><a href="#check" onclick="EX(this)">08:00-11:00</a></li>
+<li><a href="#check" onclick="EX(this)">Mo-Su 14:00-15:00; Mo closed</a></li>
+<li><a href="#check" onclick="EX(this)">Mo-Fr 08:00-11:00 || Su-Tu 14:00-15:00 open "Emergency only"</a></li>
+<li><a href="#check" onclick="EX(this)">Su-Tu, Mo 14:00-15:00 open "Hot meals"</a></li>
+<li><a href="#check" onclick="EX(this)">Apr: 14:00-15:00</a></li>
+<li><a href="#check" onclick="EX(this)">Oct: 14:00-15:00</a></li>
+<li><a href="#check" onclick="EX(this)">Jan-Jul: 14:00-15:00</a></li>
+<li><a href="#check" onclick="EX(this)">Jul-Jan: 14:00-15:00</a></li>
+<li><a href="#check" onclick="EX(this)">Jan 23 - Jul 03: "needs reservation by phone"</a></li>
+<li><a href="#check" onclick="EX(this)">Jan 23 - Jul 03: 14:00-15:00 "Please make an reservation by phone."</a></li>
+<li><a href="#check" onclick="EX(this)">Jan 23 - Jul 03: 08:00-11:00 "Please make an reservation by phone."</a></li>
+<li><a href="#check" onclick="EX(this)">Jul 23 - Jan 03: 14:00-15:00 "Please make an reservation by phone."</a></li>
+<li><a href="#check" onclick="EX(this)">Mar Su[-1] - Dec 25-Su-28 days: 14:00-15:00</a></li>
+<li><a href="#check" onclick="EX(this)">Dec 25-Su-28 days - Mar Su[-1]: 14:00-15:00</a></li>
+<li><a href="#check" onclick="EX(this)">Sa-Su 00:00-24:00</a></li>
+<li><a href="#check" onclick="EX(this)">Mo-Fr 00:00-24:00</a></li>
+<li><a href="#check" onclick="EX(this)">sunrise-sunset closed "Beware of sunburn!"</a></li>
+<li><a href="#check" onclick="EX(this)">sunset-sunrise open "Beware of vampires!"</a></li>
+<li><a href="#check" onclick="EX(this)">sunset+1:00 hours - 24:00 || closed "No drink before sunset!"</a></li>
+<li><a href="#check" onclick="EX(this)">14:00+</a></li>
+<li><a href="#check" onclick="EX(this)">-15:00</a></li>
+<li><a href="#check" onclick="EX(this)">Su 23:59-14:59</a></li>
+<li><a href="#check" onclick="EX(this)">Mo-Sa 23:59-14:59</a></li>
+<li><a href="#check" onclick="EX(this)">week 1-53/2 Mo, week 2-52/2 Th 0:00-24:00</a></li>
+<li><a href="#check" onclick="EX(this)">week 40-48 Mo, week 13-17 Th 0:00-24:00</a></li>
+</ol>
+Days without times are not valid anymore.<br>
+They were evaluated as 0:00 bis 24:00, but this was intended almost never.
+<ol>
+<li value="30"><a href="#check" onclick="EX(this)">Mo</a></li>
+<li><a href="#check" onclick="EX(this)">Mo[1]</a></li>
+<li><a href="#check" onclick="EX(this)">Mo[2]</a></li>
+<li><a href="#check" onclick="EX(this)">Mo[1-3]</a></li>
+<li><a href="#check" onclick="EX(this)">Mo[3-5]</a></li>
+<li><a href="#check" onclick="EX(this)">Th</a></li>
+<li><a href="#check" onclick="EX(this)">Th[1]</a></li>
+<li><a href="#check" onclick="EX(this)">Th[1-3]</a></li>
+<li><a href="#check" onclick="EX(this)">Su-Tu</a></li>
+<li><a href="#check" onclick="EX(this)">We-Sa</a></li>
+<li><a href="#check" onclick="EX(this)">Mo-Su; Mo "only after registration"</a></li>
+<li><a href="#check" onclick="EX(this)">Apr: Mo[1]</a></li>
+</ol>
+
+<p class="Xreferences" lang="de">
+<a href="http://www.netzwolf.info/kartografie/osm/time_domain/form_hours">Dieser Text in deutscher Sprache</a>
+</p><div id="Xm">
+<hr>
+<span class="minibuttons"><img title="QR-Code" style="width:80px;height:15px;cursor:pointer" src="Evaluation%20of%20values%20for%20the%20key%20%E2%80%9Copening_hours%E2%80%9D_files/a.png" onclick="this.style.width=null;this.style.height=this.style.height?null:'15px';this.scrollIntoView()">
+<a href="https://twitter.com/intent/tweet?text=Evaluation+of+values+for+the+key+%E2%80%9Copening_hours%E2%80%9D%3A+http%3A%2F%2Fwww.netzwolf.info%2Fen%2Fcartography%2Fosm%2Ftime_domain%2Fform_hours%3FEXP%3DMo-Fr%252010%253A00-20%253A00%252C%2520Sa%2520%2522Nach%2520Vereinbarung%2522%26DATE%3D20150214%20@Netzwolf"><img src="Evaluation%20of%20values%20for%20the%20key%20%E2%80%9Copening_hours%E2%80%9D_files/tweet_this.png" alt="tweet this"></a></span> &nbsp; <a href="http://www.netzwolf.info/e/http/creativecommons.org/licenses/by-sa/3.0/de/deed.en" rel="license"><img alt="license: by-sa" src="Evaluation%20of%20values%20for%20the%20key%20%E2%80%9Copening_hours%E2%80%9D_files/by-sa80x15.png"></a>&nbsp;2010-2015 – modified on 2012-02-01
+<div style="clear:both"></div>
+</div>
+</div>
+
+<div id="Xd">
+Consumer information: contains
+<a href="http://validator.w3.org/check?verbose=1&amp;outline=1&amp;uri=http%3A%2F%2Fwww.netzwolf.info%2Fen%2Fcartography%2Fosm%2Ftime_domain%2Fform_hours%3FEXP%3DMo-Fr%252010%253A00-20%253A00%252C%2520Sa%2520%2522Nach%2520Vereinbarung%2522%26DATE%3D20150214" rel="nofollow">HTML4.0</a>,
+<a href="http://jigsaw.w3.org/css-validator/validator?uri=http%3A%2F%2Fwww.netzwolf.info%2Fen%2Fcartography%2Fosm%2Ftime_domain%2Fform_hours%3FEXP%3DMo-Fr%252010%253A00-20%253A00%252C%2520Sa%2520%2522Nach%2520Vereinbarung%2522%26DATE%3D20150214&amp;warning=no" rel="nofollow">CSS</a>
+and an <a href="http://www.netzwolf.info/_meta/anbieterkennzeichnung" rel="nofollow" lang="de">Anbieterkennzeichnung</a>.
+<br>
+</div>
+
+<div class="Xn">
+
+<hr>
+<h2>Navigation</h2>
+
+<div id="Xntpls">
+<div id="Xnpls">
+
+<div id="Xnp"><h3>Seitenhierarchie</h3>
+<ul>
+<li class="X1"><a href="http://www.netzwolf.info/" rel="start">Netzwolf</a></li>
+<li><a href="http://www.netzwolf.info/en/cartography/osm/time_domain/">time domain (english)</a></li>
+<li><a href="http://www.netzwolf.info/en/cartography/osm/time_domain/form_hours">opening_hours</a></li>
+</ul>
+</div>
+
+<div id="Xnls">
+</div>
+</div>
+</div>
+</div>
+
+</body></html>

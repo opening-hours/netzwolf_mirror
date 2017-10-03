@@ -1,0 +1,307 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="de" xmlns="http://www.w3.org/1999/xhtml" xmlns:cal="http://www.w3.org/2002/12/cal/ical#" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- base href="http://www.netzwolf.info/en/cartography/osm/time_domain/" --></head><body><div style="background:#fff;border:1px solid #999;margin:-1px -1px 0;padding:0;"><div style="background:#ddd;border:1px solid #999;color:#000;font:13px arial,sans-serif;font-weight:normal;margin:12px;padding:8px;text-align:left">Dies ist der Cache von Google von <a href="http://www.netzwolf.info/en/cartography/osm/time_domain/" style="text-decoration:underline;color:#00c">http://www.netzwolf.info/en/cartography/osm/time_domain/</a>. Es handelt sich dabei um ein Abbild der Seite, wie diese am 26. Sept. 2013 20:57:57 GMT angezeigt wurde. Die <a href="http://www.netzwolf.info/en/cartography/osm/time_domain/" style="text-decoration:underline;color:#00c">aktuelle Seite</a> sieht mittlerweile eventuell anders aus. <a href="http://support.google.com/websearch/bin/answer.py?hl=de&amp;p=cached&amp;answer=1687222" style="text-decoration:underline;color:#00c">Weitere Informationen</a><br>Tipp: Um Ihren Suchbegriff schnell auf dieser Seite zu finden, drücken Sie <b>Strg+F</b> bzw. <b>⌘-F</b> (Mac) und verwenden Sie die Suchleiste.<br><br><div style="float:right"><a href="http://webcache.googleusercontent.com/search?q=cache:39nsna-IHekJ:www.netzwolf.info/en/cartography/osm/time_domain/&amp;hl=de&amp;gl=de&amp;strip=1" style="text-decoration:underline;color:#00c">Nur-Text-Version</a></div>
+<div>&nbsp;</div></div></div><div style="position:relative">
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Target" content="_top">
+<meta http-equiv="Last-Modified" content="Wed, 09 Jan 2013 18:54:37 GMT">
+<title>TimeDomain - evaluation of “opening_hours”, “service_times” und “collection_times” for OpenStreetMap</title>
+<link rel="stylesheet" type="text/css" href="TimeDomain%20-%20evaluation%20of%20%E2%80%9Copening_hours%E2%80%9D,%20%E2%80%9Cservice_times%E2%80%9D%20und%20%E2%80%9Ccollection_times%E2%80%9D%20for%20OpenStreetMap_files/default.css" media="screen,projection,print" title="Netzwolf default">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<link rel="schema.DCTERMS" href="http://purl.org/dc/terms/">
+<meta name="DCTERMS.modified" scheme="DCTERMS.W3CDTF" content="2012-01-24">
+<link rel="meta" href="http://www.netzwolf.info/x/icra.rdf" type="application/rdf+xml" title="ICRA labels">
+<link rel="copyright" title="Urheberrecht" href="http://www.netzwolf.info/_meta/anbieterkennzeichnung#copyright">
+<link href="http://www.netzwolf.info/kartografie/osm/time_domain/" type="text/html" rel="alternate" title="TimeDomain - Auswertung von “opening_hours”, “service_times” und “collection_times” Werten bei OpenStreetMap" lang="de_DE">
+<link href="http://www.netzwolf.info/en/cartography/osm/time_domain/" rel="alternate" title="@www.netzwolf.info">
+<link rel="search" href="http://www.netzwolf.info/_katalog/suche">
+<link rel="help" href="http://www.netzwolf.info/_meta/hilfe_zur_nutzung">
+
+
+
+<div id="Xc">
+<map id="map1"><area shape="rect" coords="0,0,100,100" alt="" href="http://www.netzwolf.info/_meta/kickme.html"></map>
+<h1>TimeDomain</h1>
+
+<div class="Xa">
+Springe zu:
+<a href="#Xnp" accesskey="S">Seitenhierarchie</a>.
+</div>
+<div style="text-align: center; font-size: smaller">
+Evaluation of
+<q>opening_hours</q>, <q>service_times</q> and <q>collection_times</q>.
+</div>
+
+<p>
+Some real world objects change behaviour over time:
+</p>
+
+<ul>
+<li>Shops and facility are opened only at certain times,</li>
+<li>ferrys run at certain times,</li>
+<li>there may be night only speed limit for streets,</li>
+<li>letterboxes are cleared at certain times,</li>
+<li>busses depart at certain times.</li>
+</ul>
+
+<p>
+The OpenStreetMap-Database stores such time specifications with keys
+<q><code><a rel="external" href="http://wiki.openstreetmap.org/wiki/Key:opening_hours">opening_hours</a></code></q>,
+<q><code><a rel="external" href="http://wiki.openstreetmap.org/wiki/Key:service_times">service_times</a></code></q>
+and
+<q><code><a rel="external" href="http://wiki.openstreetmap.org/wiki/Key:collection_times">collection_times</a></code></q>.
+The Wiki provides an
+<a rel="external" href="http://wiki.openstreetmap.org/wiki/Key:opening_hours">informal description</a>
+of the allowed values and their meanings.
+</p>
+
+<p>
+Based on this description I designed a
+<a href="http://www.netzwolf.info/en/cartography/osm/time_domain/specification">formal specification</a>
+<!--(<a href="S3">V3</a>)-->
+and developed a JavaScript
+<a href="http://www.netzwolf.info/j/osm/time_domain.js">implementation</a>.
+<br>
+Without any effort you can evaluate time expressions and become acquainted with their capabilities:
+</p>
+
+<ul>
+<li><a href="http://www.netzwolf.info/en/cartography/osm/time_domain/form_hours">interactive evaluation of time ranges</a>,</li>
+<li><a href="http://www.netzwolf.info/en/cartography/osm/time_domain/form_times">interactive evaluation of points in times</a>.</li>
+</ul>
+
+<p>
+Three maps show the objects from the OSM database using time specifications and mark erroneous ones:
+</p>
+
+<ul>
+
+<li>Map:
+<a href="http://www.netzwolf.info/en/cartography/osm/time_domain/map_opening">opening_hours</a>
+(<a href="http://www.netzwolf.info/en/cartography/osm/time_domain/map_opening?filter=error">erroneous one only</a> – quality assurance),
+<a href="http://www.netzwolf.info/en/cartography/osm/time_domain/map_opening?id.peq=w">ways only</a>,
+<a href="http://www.netzwolf.info/en/cartography/osm/time_domain/map_opening?id.peq=r">relations only</a>,
+<a href="http://www.netzwolf.info/en/cartography/osm/time_domain/map_opening?filter=open">only objects which are open just now</a>)
+</li>
+
+<li>Map:
+<a href="http://www.netzwolf.info/en/cartography/osm/time_domain/map_collection">collection_times</a>
+(<a href="http://www.netzwolf.info/en/cartography/osm/time_domain/map_collection?filter=error">erroneous one only</a> – quality assurance),
+<a href="http://www.netzwolf.info/en/cartography/osm/time_domain/map_collection?id.peq=w">ways only</a>,
+<a href="http://www.netzwolf.info/en/cartography/osm/time_domain/map_collection?id.peq=r">relations only</a>,
+<a href="http://www.netzwolf.info/en/cartography/osm/time_domain/map_collection?filter=today">point in time today</a>,
+<a href="http://www.netzwolf.info/en/cartography/osm/time_domain/map_collection?filter=open">point in time this week</a>)
+</li>
+
+<li>Map:
+<a href="http://www.netzwolf.info/en/cartography/osm/time_domain/map_service">service_times</a>
+(<a href="http://www.netzwolf.info/en/cartography/osm/time_domain/map_service?filter=error">erroneous one only</a> – quality assurance),
+<a href="http://www.netzwolf.info/en/cartography/osm/time_domain/map_service?id.peq=w">ways only</a>,
+<a href="http://www.netzwolf.info/en/cartography/osm/time_domain/map_service?id.peq=r">relations only</a>,
+<a href="http://www.netzwolf.info/en/cartography/osm/time_domain/map_service?filter=today">point in time today</a>,
+<a href="http://www.netzwolf.info/en/cartography/osm/time_domain/map_service?filter=open">point in time this week</a>)
+</li>
+
+</ul>
+
+<h2>Changes and extensions:</h2>
+
+<p>
+Objects having erroneous <code>opening_hours</code>-values are marked by a red circle on the map.
+I fixed a big number of them and got quite an overview on what the users store under this
+key and how. From this I derived some extensions to the proposal:
+</p>
+
+<dl>
+
+<dt>Cooperative values:</dt>
+<dd>
+<p>
+A common mistake was coding <em>additional</em> times in a way
+that they became interpreted as <em>exclusive</em> times:
+evaluating the value <q><code>Mo-Fr 08:00-12:00; We 14:00-18:00</code></q>
+following the proposal, the opening on wednesday ist afternoon <em>only</em>.
+</p>
+
+<p>
+I allow additional times separated by <q>,</q> and interprete the comma as <em>and also</em>:
+<q><code>Mo-Fr 08:00-12:00, We 14:00-18:00</code></q>
+is evaluated to what the user really wants.
+</p>
+
+</dd>
+
+<dt>Time is not optional any more:</dt>
+
+<dd>
+<p>
+The proposal defines <q><code>Mo-Fr</code></q> as
+<q>Monday to friday  <em>the whole day</em></q>.
+But this is wanted very seldomly.
+Therefore I made the time specification obligatory:
+<q><code>Mo-Fr</code></q> is <em>not</em> allowed any more and must be written as:
+<q><code>Mo-Fr 0:00-24:00</code></q>.
+</p>
+</dd>
+
+<dt>Daywrap:</dt>
+<dd>
+<p>
+I found quite a lot of time ranges like <q><code>22:00-03:00</code></q>
+spanning midnight.
+The proposals solution is spliting it into two time ranges, one ending at
+<code>24:00 </code> on the first day, the other starting at <code>00:00</code>
+on the next day.
+</p>
+
+<p>
+This is error prone and in case of complicated date conditions a real mess.
+Therefore I implemented these <q>Daywraps</q>:
+if the second time of a time range is lower than the first time,
+it is assumed to be on the next day.
+</p>
+</dd>
+
+<dt>Date ranges:</dt>
+
+<dd>
+<p>
+Date ranges must be terminated now with a <q>:</q>.
+This prevents difficult to resolve ambiguities.
+</p>
+</dd>
+
+
+<dt>Plain text information:</dt>
+
+<dd>
+<p>
+Opening hours can depend on conditions, which cannnot (easily) be evaluated.
+Lets assume a public pool, which usually is open from 12:00 to 18:00,
+but closes earlier on bad weather conditions.
+</p>
+
+<p>
+To represent such conditions, I add to the status values <q>open</q> and <q>closed</q>
+a third value <q>unknown</q>, which must be used with a plain text comment.
+</p>
+
+<p>
+Addtionally you can use informal only specifications like <q>during the asparagus season</q>.
+</p>
+</dd>
+
+
+<dt>Error tolerance:</dt>
+
+<dd>
+<p>
+Some errors are quite common:
+names of weekdays and months are written in other languages or not abbreviated,
+hours and minutes are separated by <q>.</q> and not by <q>:</q>.
+</p>
+
+<p>
+I fix this kind of errors and evaluate the fixed expression,
+but return the result together with an error message.
+</p>
+
+<p>
+The evaluation functions can return <q>open</q> and <q>erroneous</q> at the same time.
+In the maps this is displayed by circles of two colors.
+</p>
+</dd>
+
+</dl>
+
+<h2>Open issues:</h2>
+
+<dl>
+
+<dt>Holidays (<q>PH</q> und <q>SH</q>)</dt>
+
+<dd>
+<p>
+Public holidays and school holidays depend on the location.
+I need additional information to select the right rules.
+I.e. we could use <q>SH(de.nrw)</q> to select school holidays in state
+North Rhine Westphalia of Germany.
+</p>
+
+<p>
+The current implementation evaluates <q>PH</q> to the public holidays of Germany;
+school holidays are not defined at all.
+</p>
+</dd>
+
+<dt><q>Sunrise</q> und <q>sunset</q>:</dt>
+<dd>
+
+<p>
+This times can easily be derived from date and location.
+Unfortunately my lazyness prevented me from porting the
+<a href="http://www.netzwolf.info/astronomie/ephemeriden/sonne" lang="de">equations</a> to JavaScript.
+If I'm very bored some day, I will make good for this – or if someone asks for it.
+</p>
+
+<p>
+Currently I use <q>06:00</q> respectively <q>18:00</q>.
+</p>
+</dd>
+
+<dt>Documentation:</dt>
+<dd>
+
+<p>
+I got started with an <a href="http://www.netzwolf.info/en/cartography/osm/time_domain/explanation">halfway comprehensible explanation</a>,
+but would like somebody else to complete this work.
+Because I'm too deeply involved into the internals of time value evaluation,
+I can't take the plain users point of view anymore.
+</p>
+
+</dd>
+
+</dl>
+
+<p class="Xreferences" lang="de">
+<a href="http://www.netzwolf.info/kartografie/osm/time_domain/">Dieser Text in deutscher Sprache</a>
+</p><div id="Xm">
+<hr>
+<a href="http://www.netzwolf.info/e/http/creativecommons.org/licenses/by-sa/3.0/de/deed.en" rel="license"><img alt="license: by-sa" src="TimeDomain%20-%20evaluation%20of%20%E2%80%9Copening_hours%E2%80%9D,%20%E2%80%9Cservice_times%E2%80%9D%20und%20%E2%80%9Ccollection_times%E2%80%9D%20for%20OpenStreetMap_files/by-sa80x15.png"></a>&nbsp;2012-2013 – modified on 2012-01-24
+</div>
+</div>
+
+<div id="Xd">
+Consumer information: contains
+<a href="http://validator.w3.org/check?verbose=1&amp;outline=1&amp;uri=http%3A%2F%2Fwww.netzwolf.info%2Fen%2Fcartography%2Fosm%2Ftime_domain%2F" rel="nofollow">XHTML1.0</a>,
+<a href="http://jigsaw.w3.org/css-validator/validator?uri=http%3A%2F%2Fwww.netzwolf.info%2Fen%2Fcartography%2Fosm%2Ftime_domain%2F&amp;warning=no" rel="nofollow">CSS</a>
+and an <a href="http://www.netzwolf.info/_meta/anbieterkennzeichnung" rel="nofollow" lang="de">Anbieterkennzeichnung</a>.
+<br>
+</div>
+
+<div class="Xn">
+
+<hr>
+<h2>Navigation</h2>
+
+<div id="Xntpls">
+<div id="Xnpls">
+
+<div id="Xnp"><h3>Seitenhierarchie</h3>
+<ul>
+<li class="X1"><a href="http://www.netzwolf.info/" rel="start">Netzwolf</a></li>
+<li><span class="Xs">TimeDomain</span></li>
+</ul>
+</div>
+
+<div id="Xnls">
+</div>
+</div>
+</div>
+<map id="map2"><area shape="rect" coords="0,0,100,100" alt="" href="http://www.netzwolf.info/_meta/kickme.html"></map>
+</div>
+
+</div></body></html>

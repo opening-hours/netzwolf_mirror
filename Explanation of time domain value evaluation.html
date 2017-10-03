@@ -1,0 +1,723 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="de" xmlns="http://www.w3.org/1999/xhtml" xmlns:cal="http://www.w3.org/2002/12/cal/ical#" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- base href="http://www.netzwolf.info/en/cartography/osm/time_domain/explanation" --></head><body><div style="background:#fff;border:1px solid #999;margin:-1px -1px 0;padding:0;"><div style="background:#ddd;border:1px solid #999;color:#000;font:13px arial,sans-serif;font-weight:normal;margin:12px;padding:8px;text-align:left">Dies ist der Cache von Google von <a href="http://www.netzwolf.info/en/cartography/osm/time_domain/explanation" style="text-decoration:underline;color:#00c">http://www.netzwolf.info/en/cartography/osm/time_domain/explanation</a>. Es handelt sich dabei um ein Abbild der Seite, wie diese am 26. Sept. 2013 19:48:30 GMT angezeigt wurde. Die <a href="http://www.netzwolf.info/en/cartography/osm/time_domain/explanation" style="text-decoration:underline;color:#00c">aktuelle Seite</a> sieht mittlerweile eventuell anders aus. <a href="http://support.google.com/websearch/bin/answer.py?hl=de&amp;p=cached&amp;answer=1687222" style="text-decoration:underline;color:#00c">Weitere Informationen</a><br>Tipp: Um Ihren Suchbegriff schnell auf dieser Seite zu finden, drücken Sie <b>Strg+F</b> bzw. <b>⌘-F</b> (Mac) und verwenden Sie die Suchleiste.<br><br><div style="float:right"><a href="http://webcache.googleusercontent.com/search?q=cache:kYyoA3Nm28AJ:www.netzwolf.info/en/cartography/osm/time_domain/explanation&amp;hl=de&amp;gl=de&amp;strip=1" style="text-decoration:underline;color:#00c">Nur-Text-Version</a></div>
+<div>&nbsp;</div></div></div><div style="position:relative">
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Target" content="_top">
+<meta http-equiv="Last-Modified" content="Thu, 07 Mar 2013 17:58:10 GMT">
+<title>Explanation of time domain value evaluation</title>
+<link rel="stylesheet" type="text/css" href="Explanation%20of%20time%20domain%20value%20evaluation_files/default.css" media="screen,projection,print" title="Netzwolf default">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<link rel="schema.DCTERMS" href="http://purl.org/dc/terms/">
+<meta name="DCTERMS.modified" scheme="DCTERMS.W3CDTF" content="2012-02-02">
+<link rel="meta" href="http://www.netzwolf.info/x/icra.rdf" type="application/rdf+xml" title="ICRA labels">
+<link rel="copyright" title="Urheberrecht" href="http://www.netzwolf.info/_meta/anbieterkennzeichnung#copyright">
+<link href="http://www.netzwolf.info/en/cartography/osm/time_domain/explanation" rel="alternate" title="@www.netzwolf.info">
+<link rel="search" href="http://www.netzwolf.info/_katalog/suche">
+<link rel="help" href="http://www.netzwolf.info/_meta/hilfe_zur_nutzung">
+
+
+
+<div id="Xc">
+<h1>Explanation of time domain value evaluation</h1>
+
+<div class="Xa">
+Springe zu:
+<a href="#Xnp" accesskey="S">Seitenhierarchie</a>.
+</div>
+<div style="text-align: center">
+<code>opening_hours</code>,
+<code>collection_times</code>,
+<code>service_times</code>
+</div>
+
+<h2>Technical:</h2>
+
+<p>
+The evaluation function is called with two arguments:
+</p>
+
+<ol>
+<li>time domain expression, a string containing the value of the corresponding attribute,</li>
+<li>the time the expression is to be evaluated for, as object with fields
+year, month, day, hour, minute; if ommited, <em>now</em> is assumed.</li>
+</ol>
+
+<p>
+The evaluation function is (still) naive about the time zone;
+it assumes that time object and time domain expression use the same timezone.
+If the time domain expressions time zone is known,
+<q>now</q> should be expressed in this timezone.
+</p>
+
+<p>
+The evaluation function returns an object with six fields:
+</p>
+
+<ol>
+<li>Status:
+
+<table border="1">
+<tbody><tr>
+<th>Value</th>
+<th>Meaning</th>
+</tr>
+<tr><td>true</td><td>opened</td></tr>
+<tr><td>false</td><td>closed</td></tr>
+<tr><td>null</td><td>unknown</td></tr>
+</tbody></table>
+</li>
+
+<li>a list of the times of the next collections or services,</li>
+
+<li>informational messages (optional)<br>
+explaining uncommon evaluation steps.
+</li>
+
+<li>a list of error messages (optional),</li>
+
+<li>a list of warning messages (optional),</li>
+
+<li>copy of the rule used for the decision.</li>
+
+</ol>
+
+<h2>Components of time domain expressions:</h2>
+
+<h3>General:</h3>
+
+<dl>
+
+<dt id="case">Case:</dt>
+<dd>is not significant (except in plain text comments of course);
+</dd>
+
+<dt id="blankspace">Blankspace:</dt>
+<dd>is not significant, except if separating elements of the language:<br>
+<q><code>1234</code></q> is different to <q><code>12&nbsp;34</code></q>.
+</dd>
+
+</dl>
+
+<h3>Elements:</h3>
+
+<dl>
+
+<dt>Years:</dt>
+<dd>are written using four digits and valid starting with 2000;
+</dd>
+
+<dt>Months:</dt>
+<dd>are written as english three letter abbreviations;
+</dd>
+
+<dt>Days of week:</dt>
+<dd>are written as english two letter abbreviations.
+</dd>
+
+</dl>
+
+<h3>Dates:</h3>
+
+<dl>
+
+<dt>Calendar date:</dt>
+<dd>A calendar date is written <q><code>2010&nbsp;Dec&nbsp;25</code></q>
+(where year and month can be ommited).<br>
+If the year is missing, the current year is assumed.<br>
+Personally I prefer the
+<a rel="external" href="http://www.netzwolf.info/e/wiki_en/ISO_8601">ISO notation</a>
+<q><code>2010-12-25</code></q>
+(and would like to
+<a rel="external" href="http://xkcd.com/1179/">use it exclusively</a>);
+what about including it?
+</dd>
+
+<dt>Moving holiday:</dt>
+<dd>Currently only easter is implemented: <q><code>easter</code></q> means easter sunday.
+</dd>
+
+<dt>Date as certain day of week in month:</dt>
+<dd>
+<q><code>Dec&nbsp;We[1]</code></q> is the first wednesday in september;<br>
+<q><code>Mar&nbsp;Su[-1]</code></q> is the last sunday of march in current year:
+in germany start of the summer time.
+</dd>
+
+<dt>Date as day of week after or before another Date:</dt>
+<dd>
+<q><code>Dec&nbsp;25</code></q> is the first christmasday,
+<q><code>Dec&nbsp;25&nbsp;<em>-</em>&nbsp;Su</code></q>
+is the last sunday <em>before</em> the first christmasday: forth advent.
+</dd>
+
+<dt>Date as fixed distance to another date:</dt>
+<dd>
+<q><code>easter&nbsp;+&nbsp;1&nbsp;days</code></q> is easter monday,<br>
+<q><code>easter&nbsp;-&nbsp;2&nbsp;days</code></q> is good friday,<br>
+<q><code>easter&nbsp;-&nbsp;48&nbsp;days</code></q> is carnival monday,<br>
+<q><code>Dec&nbsp;25&nbsp;-&nbsp;Su&nbsp;-&nbsp;21&nbsp;days</code></q> is the first advent.
+</dd>
+
+</dl>
+
+<h4>Periods:</h4>
+
+<dl>
+
+<dt>Period between two dates:</dt>
+<dd>
+<q><code>Mar&nbsp;Su[-1]&nbsp;-&nbsp;Oct&nbsp;Su[-1]&nbsp;-&nbsp;1&nbsp;days</code></q> is the period of summer time.
+<br>
+Beware:
+<q><code>Oct&nbsp;Su[-1]&nbsp;-&nbsp;1&nbsp;days</code></q>
+is not the same as
+<q><code>Oct&nbsp;Sa[-1]</code></q>!
+<br>
+<q><code>Oct&nbsp;Su[-1]&nbsp;-&nbsp;Mar&nbsp;Su[-1]&nbsp;-&nbsp;1&nbsp;days</code></q> is the period of winter time.<br>
+→ If the first date is <em>later</em> then the second one and <em>no</em> year is specified,
+the period stretches from begin of the year to the second date and from the first date until the end of the year.<br>
+<q><code>Nov&nbsp;11&nbsp;-&nbsp;easter-47&nbsp;days</code></q> is the <q>fifth season</q> (carnival in the area around Cologne).<br>
+</dd>
+
+<dt>List of periods:</dt>
+<dd>
+<q><code>Sep&nbsp;15+Sa&nbsp;-&nbsp;Oct&nbsp;Su[1],&nbsp;Oct&nbsp;1-3</code></q> is the period of the <a rel="external" href="http://www.oktoberfest.de/en">Oktoberfest</a>.<br>
+→ Periods and single days can be combined using <q><code>,</code></q>.
+The list components may overlap.
+</dd>
+
+</dl>
+
+<h3>Calendar weeks:</h3>
+
+<dl>
+
+<dt>Weeks:</dt>
+<dd>
+<q><code>week 2</code></q> means <q>in second calendar week</q>,<br>
+<q><code>week 10-12</code></q> means <q>in tenth, eleventh and twelfth calendar week</q>,<br>
+<q><code>week 2-52/2</code></q> means <q>all even calendar weeks</q>.
+</dd>
+
+</dl>
+
+<h3>Days independent of a date:</h3>
+
+<dl>
+
+<dt>Day of week:</dt>
+<dd>
+<q><code>Fr</code></q> means <q>every friday</q>,<br>
+<q><code>Fr-Mo</code></q> means <q>friday, saturday, sunday, monday</q>,<br>
+<q><code>Mo-We,Sa</code></q> means <q>monday, tuesday, wednesday, saturday</q>.
+</dd>
+
+<dt>Day of week in month:</dt>
+<dd>
+The <em>first sunday in month</em> is specified as <q><code>Su[1]</code></q>,<br>
+first and second as <q><code>Su[1,2]</code></q>,<br>
+first, second and third as <q><code>Su[1-3]</code></q>,<br>
+first, third and all following as <q><code>Su[1,3-5]</code></q>.<br>
+The <em>last sunday in month</em> is specified as <q><code>Su[-1]</code></q>,<br>
+first and last as <q><code>Su[1,-1]</code></q>.
+</dd>
+
+<dt>Day of month:</dt>
+<dd>Day of month <em>outside</em> a calendar date are followed by a <q>.</q>;
+this notations prevents difficult to resolve ambiguities:<br>
+<q><code>1.</code></q> – the first of each month<br>
+<q><code>1.-7.</code></q> – the first seven days of each month;<br>
+<q><code>2.-30./2</code></q> – parking permitted only on even days.<br>
+→ the <q>from - to /step</q> is a general notation,
+which ist used for calendar weeks and for repetitions at <code>collection_times</code>
+and <code>service_times</code>.
+</dd>
+
+<dt>Holidays:</dt>
+<dd>
+<q><code>PH</code></q> means <em>public holidays</em>,<br>
+<q><code>SH</code></q> means <em>school holidays</em>,<br>
+<q><code>Su,PH</code></q> means <q>on public and school holidays</q>.
+</dd>
+
+</dl>
+
+<h3>Times:</h3>
+
+<dl>
+
+<dt>Fixed times:</dt>
+<dd>
+are written <q>H:MM</q> or <q>HH:MM</q>.
+</dd>
+
+<dt>Variable times:</dt>
+<dd>
+The time of sunrise and sunset is written as (surprise!)
+<q><code>sunrise</code></q> and <q><code>sunset</code></q>.<br>
+This notation is quite popular for opening hours of parks and playing grounds.
+</dd>
+
+<dt>Variable times with offset:</dt>
+<dd>
+<q><code>sunrise-0:30&nbsp;hours</code></q> means <q>half an hour before sunrise</q>.
+</dd>
+
+<dt>Timespans:</dt>
+<dd>
+<q><code>09:00-17:00</code></q> is the classical <q>9 to 5</q> job.<br>
+<q><code>21:00-05:00</code></q> is the <q>9 to 5</q> job  for kernel hackers.<br>
+→ if the second time is <em>less</em> than the first one, it is assumed to be on the next day.<br>
+<q><code>sunset-sunrise</code></q> ← <q>From Dusk Till Dawn</q> → beware of vampires!
+</dd>
+
+</dl>
+
+<h2>Evaluation:</h2>
+
+<h3>Rules:</h3>
+
+<p>
+Most opening hours can be specified as simple rules.<br>
+Rules consist of a sequence of time spans, in most cases qualified by a day of week,
+and joined by <q>,</q>:
+</p>
+
+<dl>
+
+<dt><code>
+08:00-12:00
+</code></dt><dd>
+On all days from 8 to 12.
+</dd>
+
+<dt><code>
+Mo-Fr 08:00-12:00
+</code></dt><dd>
+Monday until friday from 8 to 12.
+</dd>
+
+<dt><code>
+Fr,Sa 22:00-05:00
+</code></dt><dd>
+Friday and saturday evening from 10pm to 5am <em>on next day</em>.
+</dd>
+
+<dt><code>
+Mo-Fr 08:00-12:00, Sa 10:00-12:00
+</code></dt><dd>
+Monday until friday from 8 to 12, and saturdays from 10 to 12.
+</dd>
+
+</dl>
+
+<p>
+This indications are evaluated the way one intuitively reads opening hours
+at the doctors office, from left to right and additive,
+later timespans are joined to the former ones:
+</p>
+
+<dl>
+
+<dt><code>
+Mo-Fr 08:00-12:00, We 14:00-16:00
+</code></dt><dd>
+Monday until friday from 8 to 12, on wednesdays <em>additionally</em> from 14 to 16.
+</dd>
+
+<dt><code>
+Mo-Fr,Sa[1] 08:00-12:00
+</code></dt><dd>
+Monday until friday and <em>additionally</em> on first saturday in months from 8 to 12.
+</dd>
+
+<dt><code>
+Mo-Fr 08:00-12:00, Sa[1] 10:00-12:00
+</code></dt><dd>
+Monday until friday from 8 to 12 and <em>additionally</em> on first saturday of months from 10 to 12.
+</dd>
+
+<dt><code>
+Mo-Fr 08:00-12:00, Mo[1] 14:00-16:00
+</code></dt><dd>
+Monday until friday from 8 to 12, <em>additionally</em> on first monday of months from 14 to 16 Uhr.
+</dd>
+
+<dt><code>
+Mo-Fr 08:00-12:00, PH off
+</code></dt><dd>
+Monday until friday from 8 to 12, <em>except</em> on public holidays.
+</dd>
+
+</dl>
+
+<p>
+The time indications can be followed by an opening status:
+</p>
+
+<ul>
+<li><q><code>open</code></q> means opened (default),</li>
+<li><q><code>closed</code></q> means closed,</li>
+<li><q><code>"&nbsp;……Text……&nbsp;"</code></q> represents <em>conditional opening hours</em>.
+
+<p>
+The conditions can be external influences, users attributes,
+or represent incomplete knowlege.
+The evaluation function returns <q>Status=unknown + messages</q>.
+This models the (in reality quite common) answer <q>it depends</q> to the question <q>is it open?</q>:
+</p>
+
+<dl>
+
+<dt><code>
+Mo-Fr 08:00-16:00, Sa 10:00-14:00, Sa 14:00-18:00 "if weather permits "
+</code></dt><dd>
+The public pool extends its opening hours on saturdays to 18:00, if the sun shines.
+(external influence)
+</dd>
+
+<dt><code>
+Mo-Fr 18:00-22:00, We 18:00-20:00 "female only"
+</code></dt><dd>
+Wednesday from 18:00 to 20:00 access to the saune is permitted to female only.
+(users attribute).
+</dd>
+
+<dt><code>
+Mo-Fr 08:00-12:00, Sa 08:00-20:00 "on appointent (555 1234)"
+</code></dt><dd>
+The pet doc will come in on saturdays from 8 to 20:00, too, but you have to phone him before.
+(users action required)
+</dd>
+
+<dt><code>
+Su 14:00-15:00, Mo-Fr 08:00-16:00 "groups of at minimum 12 after appointment"
+</code></dt><dd>
+On working days, the cave guide will appear only if it pays.
+(operators condition).
+</dd>
+
+</dl>
+
+<p>
+The evaluation function returns <q>unknown</q> together with the plain text message.
+</p>
+
+</li>
+</ul>
+
+<h4>Fineprint regarding the rules:</h4>
+
+<ul style="font-size: smaller">
+
+<li>
+<q><code>open</code></q> and <q><code>closed</code></q> can be followed by a comment.
+The comment does not change the status, but is returned together with it.
+It may contain a cause for a closing or additional information:
+<q><code>Mo-Sa 10:00-21:00 open "Hot meals from 11:30 to 13:30 and from 17:30 to 19:30"</code></q>
+</li>
+
+<li>
+Days may be prepended by a holiday indication:<br>
+<q><code>Fr 10:00-14:00, SH Fr off</code></q> means
+<q>fridays from 10 to 14 Uhr, <em>except</em> on fridays during school holidays</q>.
+</li>
+
+<li>
+Days may be prepended by a week indication:<br>
+<q><code>week 2-52/2 Sa 10:00-16:00</code></q> means
+<q>Flea market on saturdays of even weeks.</q>.
+</li>
+
+</ul>
+
+<h3>Extended indications for experts:</h3>
+
+<p>
+Rules can be combined using <q><code>;</code></q>.
+As long as the specified days are distinct,
+the notation using a single rule is equivalent to the notation using multiple rules:
+</p>
+
+<dl>
+
+<dt><code>
+<span style="color:blue">Mo-Fr 08:00-12:00</span>;
+<span style="color:green">Sa 08:00-20:00</span>
+</code></dt><dt><code>
+<span style="color:gray">Mo-Fr 08:00-12:00, Sa 08:00-20:00</span>
+</code></dt><dd>
+Both have the same meaning.
+</dd>
+
+</dl>
+
+<p>
+But things change, if multiple rules <q>compete</q> about one day:
+in this case a <em>all or nothing</em> principle is applied:
+<b>the <em>last</em> rule appliable to a day</b> has to take care of this day <b>alone</b>.
+</p>
+
+<dl>
+
+<dt><code>
+<span style="color:gray">Mo-Fr 08:00-12:00, We 14:00-16:00</span>
+</code></dt><dd>
+On wednesdays opened <em>additionally</em> from 14:00 to 16:00.
+</dd>
+
+<dt><code>
+<span style="color:blue">Mo-Fr 08:00-12:00</span>;
+<span style="color:green">We 14:00-16:00</span>
+</code></dt><dd>
+On wednesdays opened <em>only</em> from 14:00 to 16:00.
+</dd>
+
+</dl>
+
+<p>
+In my oppinion this is the most difficult to explain feature:
+<q>,</q> means a friendly together, <q>;</q> means competition.
+Both was part of the original proposal, both is needed:
+<em>additional</em> opening hours on specific days are common,
+while if defining exceptions for holidays one needs to redefine the whole day:
+</p>
+
+<dl>
+
+<dt><code>
+<span style="color:blue">Mo-Fr 11:30-13:30, We 17:30-20:00</span>;
+<span style="color:green">Su,PH 14:00-18:00</span>
+</code></dt><dd>
+Monday to friday lunch menu, wednesday <em>additionally</em> dinner.<br>
+On Sundays and holidays <em>only</em> from 14:00 to 18:00 Uhr.<br>
+If the holiday is on a wednesday, the 14:00-18:00 rule applies.
+</dd>
+
+</dl>
+
+<p>
+An editor should display each rule on its own line to show their distinctness.
+</p>
+
+<h3>Calendar ranges:</h3>
+
+<p>
+Rules may be limited to certain periods of the year.
+The periods will be prepended followed by a <q>:</q>.
+A period indication is applied to the following rules upto the next period indication.
+Rules without validity period are allways applicable:
+</p>
+
+<dl>
+
+<dt><code>
+Jul: Sa,Su 12:00-14:00
+</code></dt><dd>
+On saturdays and sundays in july from noon to 14:00.
+</dd>
+
+<dt><code>
+Oct-Mar: Su[1] 12:00-14:00
+</code></dt><dd>
+From october to march the first sunday in month from noon to 14:00 (yearwrap allowed).
+</dd>
+
+<dt><code>
+easter-sep 15: 12:00-14:00
+</code></dt><dd>
+From easter until the fifteenth of september each day from noon to 14:00.
+</dd>
+
+<dt><code>
+Jun: "from mid june"; Jul-Aug: open; Sep: "until mid september"
+</code></dt><dd>
+A mountain huts fuzzy opening hours:
+for the uncertain months <q>unknown</q> is returned together with an informational message,
+for the certain months <q>open</q> or <q>closed</q> is returned.
+</dd>
+
+</dl>
+
+<p>
+The evaluation of validity periods is easy to understand:
+all rules <em>invalid</em> for the particular time are ignored,
+than the remaining rules evaluated using the known <em>all or nothing</em> method.
+</p>
+
+<dl>
+
+<dt><code>
+Mo-Fr 10:00-12:00; Jul,Aug: Mo-Fr 14:00-16:00
+</code></dt><dd>
+From 10:00 to 12:00, except in july and august, than from 14:00 to 16:00.
+The first rule is valid allways, the second one only from july to august.
+In july and august the second rule overwrites the first one.
+</dd>
+
+<dt><code>
+Mar Su[-1]-Oct Su[-1]-1 days: <i>sr1</i>; <i>sr2</i>; …;
+Oct Su[-1]-Mar Su[-1]-1 days: <i>wr1</i>; <i>wr2</i>; …;
+</code></dt><dd>
+Different sets of rules for summer and winter.
+</dd>
+
+</dl>
+
+<p>
+Some calendar ranges cannot be expressed formally, i.e. <q>during asparagus season</q>.
+In this case one writes the description as comment followed by a <q>:</q>:
+</p>
+
+<dl>
+<dt><code>
+"During asparagus season": Mo-Fr 08:00-18:00
+</code></dt>
+</dl>
+
+<p>
+Evaluation: this <q>calendar range</q> is valid <em>allways</em>,
+but in rules following this indication <q>open</q> is evaluated as <q>unknown</q>
+with the plain text calendar range as comment.
+This kind of calendar range should only be used if inavoidable and only standalone,
+because the interaction with with the <q>all-or-nothing</q> and fallback groups is weird.
+</p>
+
+<h3>Fallback groups:</h3>
+
+<p>
+Multiple rulesets can be concatenated using <q>||</q>.
+They are evaluated from left to right,
+until on ruleset returns <q>open</q> or the last one is reached.
+</p>
+
+<dl>
+
+<dt><code>
+Mo-Fr 08:00-12:00, 14:00-18:00, Sa 09:00-13:00, PH off || Tu 06:00-06:00 open "Emergency only"
+</code></dt><dd>
+This pharmacy has normal opening hours, and additionally an emergency duty from tuesday 6:00 until wednesday 6:00.
+If both rulesets return open (i.e. on tuesday 9:00), the first one (normal open) is returned.
+On holidays, the normal opening hours do not apply, but the emergency rules do.
+</dd>
+
+<dt>
+<code>Mo-Fr 08:00-16:00, Sa 09:00-14:00, PH Off || "Outside office hours on appointment by phone"
+</code></dt><dd>
+A customer friendly pet dog.
+</dd>
+
+</dl>
+
+<h2>Open issues:</h2>
+
+<dl>
+
+<dt>Public holidays and school holidays depend on region:</dt>
+
+<dd>
+<p>
+The evaluation function accepts a parameter <q>region</q>,
+the <a href="http://www.netzwolf.info/en/cartography/osm/time_domain/form_hours">interactive evaluation form</a> provides an input field
+and the maps use the value of the key <q><code>addr:country</code></q>.
+But the problem is still not solved:
+</p>
+
+<ul>
+<li>How fine grained should the region id be?</li>
+<li>How can I derive the region id (if no addr:country available) from coordinates (which are allways available)?</li>
+<li>How can I retrieve the definitions of public and school holidays for a certain region id?</li>
+</ul>
+
+<p>
+Currently the countrywide public holidays for germany and austria are provided
+and activated by region ids “at” and “de”.
+Schoolholidays are not provided at all, because they depend on much smaller regions and change every year.
+</p>
+
+</dd>
+
+<dt>Well defined conditions for opening hours:</dt>
+
+<dd>
+<p>
+There was a suggestion to define a list of ids for commonly used conditions
+(“on request”, “on appointment”, “if weather permits”, …),
+to enable providing translated messages.
+</p>
+
+<p>
+Because there is no such list at the moment and because I dont like to clutter the syntax,
+I suggest writing such ids uppercase only <em>as plain comments</em>,
+i.e.: <code>"OR"</code> for <q>on request</q>.
+</p>
+
+<p>
+This allows natural growth of the list without need for continuous
+adjustment of the evaluation software.
+</p>
+
+</dd>
+
+<dt>Documentation:</dt>
+
+<dd>
+
+<p>
+If a developer tries to document his own development,
+the knowledge of the internals stand in his way.
+The documentation will follow the internal processing
+insted of being focused to the users needs.
+</p>
+
+<p>
+<b>Who can write a tutorial from users for users, possibly plundering this text?</b>
+</p>
+
+</dd>
+
+</dl>
+
+<p class="Xreferences" lang="de">
+<a href="http://www.netzwolf.info/kartografie/osm/time_domain/erklaerung">Dieser Text in deutscher Sprache</a>
+</p><div id="Xm">
+<hr>
+<a href="http://www.netzwolf.info/e/http/creativecommons.org/licenses/by-sa/3.0/de/deed.en" rel="license"><img alt="license: by-sa" src="Explanation%20of%20time%20domain%20value%20evaluation_files/by-sa80x15.png"></a>&nbsp;2012-2013 – modified on 2012-02-02
+</div>
+</div>
+
+<div id="Xd">
+Consumer information: contains
+<a href="http://validator.w3.org/check?verbose=1&amp;outline=1&amp;uri=http%3A%2F%2Fwww.netzwolf.info%2Fen%2Fcartography%2Fosm%2Ftime_domain%2Fexplanation" rel="nofollow">XHTML1.0</a>,
+<a href="http://jigsaw.w3.org/css-validator/validator?uri=http%3A%2F%2Fwww.netzwolf.info%2Fen%2Fcartography%2Fosm%2Ftime_domain%2Fexplanation&amp;warning=no" rel="nofollow">CSS</a>
+and an <a href="http://www.netzwolf.info/_meta/anbieterkennzeichnung" rel="nofollow" lang="de">Anbieterkennzeichnung</a>.
+<br>
+</div>
+
+<div class="Xn">
+
+<hr>
+<h2>Navigation</h2>
+
+<div id="Xntpls">
+<div id="Xnpls">
+
+<div id="Xnp"><h3>Seitenhierarchie</h3>
+<ul>
+<li class="X1"><a href="http://www.netzwolf.info/" rel="start">Netzwolf</a></li>
+<li><a href="http://www.netzwolf.info/en/cartography/osm/time_domain/">time domain (english)</a></li>
+<li><span class="Xs">Explanation</span></li>
+</ul>
+</div>
+
+<div id="Xnls">
+</div>
+</div>
+</div>
+</div>
+
+</div></body></html>

@@ -1,0 +1,764 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="de" xmlns="http://www.w3.org/1999/xhtml" xmlns:cal="http://www.w3.org/2002/12/cal/ical#" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- base href="http://www.netzwolf.info/en/cartography/osm/time_domain/specification" --></head><body><div style="background:#fff;border:1px solid #999;margin:-1px -1px 0;padding:0;"><div style="background:#ddd;border:1px solid #999;color:#000;font:13px arial,sans-serif;font-weight:normal;margin:12px;padding:8px;text-align:left">Dies ist der Cache von Google von <a href="http://www.netzwolf.info/en/cartography/osm/time_domain/specification" style="text-decoration:underline;color:#00c">http://www.netzwolf.info/en/cartography/osm/time_domain/specification</a>. Es handelt sich dabei um ein Abbild der Seite, wie diese am 27. Aug. 2013 15:45:05 GMT angezeigt wurde. Die <a href="http://www.netzwolf.info/en/cartography/osm/time_domain/specification" style="text-decoration:underline;color:#00c">aktuelle Seite</a> sieht mittlerweile eventuell anders aus. <a href="http://support.google.com/websearch/bin/answer.py?hl=de&amp;p=cached&amp;answer=1687222" style="text-decoration:underline;color:#00c">Weitere Informationen</a><br>Tipp: Um Ihren Suchbegriff schnell auf dieser Seite zu finden, drücken Sie <b>Strg+F</b> bzw. <b>⌘-F</b> (Mac) und verwenden Sie die Suchleiste.<br><br><div style="float:right"><a href="http://webcache.googleusercontent.com/search?q=cache:FJ6LQxKTKxoJ:www.netzwolf.info/en/cartography/osm/time_domain/specification&amp;hl=de&amp;gl=de&amp;strip=1" style="text-decoration:underline;color:#00c">Nur-Text-Version</a></div>
+<div>&nbsp;</div></div></div><div style="position:relative">
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Target" content="_top">
+<meta http-equiv="Last-Modified" content="Wed, 12 Dec 2012 12:10:51 GMT">
+<title>Grammar for time domain values</title>
+<link rel="stylesheet" type="text/css" href="Grammar%20for%20time%20domain%20values_files/default.css" media="screen,projection,print" title="Netzwolf default">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<link rel="schema.DCTERMS" href="http://purl.org/dc/terms/">
+<meta name="DCTERMS.modified" scheme="DCTERMS.W3CDTF" content="2010-12-17">
+<link rel="meta" href="http://www.netzwolf.info/x/icra.rdf" type="application/rdf+xml" title="ICRA labels">
+<link rel="copyright" title="Urheberrecht" href="http://www.netzwolf.info/_meta/anbieterkennzeichnung#copyright">
+<link href="http://www.netzwolf.info/en/cartography/osm/time_domain/specification" rel="alternate" title="@www.netzwolf.info">
+<link rel="search" href="http://www.netzwolf.info/_katalog/suche">
+<link rel="help" href="http://www.netzwolf.info/_meta/hilfe_zur_nutzung">
+<style type="text/css">
+
+.complex,
+.comment { color: gray; }
+
+.calendar, .calendar td	{ background: #88ff88; }
+
+.days, .days td { background: #ff9999; }
+
+.weeks, .weeks td { background: #ffaaaa; }
+
+.times, .times td { background: #88ccff; }
+
+</style>
+
+
+
+<div id="Xc">
+<h1>Grammar for time domain values</h1>
+
+<div class="Xa">
+Springe zu:
+<a href="#Xnp" accesskey="S">Seitenhierarchie</a>.
+</div>
+<ul>
+<li>Is compatible with the proposals examples (except the time is obligatory)</li>
+<li>Covers all values I found (as far a formal expression is possible at all).</li>
+<li>The very common plain text connditions can be expressed as <q>"…"</q> comments.</li>
+<li>Can be evaluated sufficently simple™.</li>
+</ul>
+
+<p>
+Legend:
+</p>
+
+<ul style="clear: both">
+<li><q>|</q> separates alternatives.</li>
+<li><q>[</q> and <q>]</q> bracket optional components.</li>
+<li><q>{</q> and <q>}</q> bracket optional repeatable components.</li>
+<li>Multiple productions for one symbol connote alternatives.</li>
+</ul>
+
+<table>
+
+<thead>
+<tr>
+<th>Symbol</th><th>Definition</th><th>Comment</th>
+</tr>
+</thead>
+<tbody>
+
+<tr><th colspan="3" style="text-align: center"><code>time_domain</code></th></tr>
+
+<tr>
+<td>&lt;time_domain&gt;</td>
+<td>
+&lt;fallback_group&gt;
+<span class="complex">{ <q>||</q> &lt;fallback_group&gt; }</span>
+</td>
+<td>[<a href="#rule1">1</a>]</td>
+</tr>
+
+<tr>
+<td>&lt;fallback_group&gt;</td>
+<td>
+&lt;rule_sequence&gt;
+<span class="complex">{ <q>;</q> &lt;rule_sequence&gt; }</span>
+</td>
+<td></td>
+</tr>
+
+<tr>
+<td>&lt;rule_sequence&gt;</td>
+<td>
+<span class="calendar">
+[ &lt;calendar_ranges&gt; <q>:</q> ]
+</span>
+&lt;basic_rule&gt;
+<span class="complex">{ <q>;</q> &lt;basic_rule&gt; }</span>
+</td>
+<td>[<a href="#rule2">2</a>]</td>
+</tr>
+
+</tbody>
+
+<tbody>
+
+<tr><th colspan="3" style="text-align: center"><code>Basic rule</code></th></tr>
+
+<tr>
+<td>&lt;basic_rule&gt;</td>
+<td>
+&lt;times_for_days&gt; { <q>,</q> &lt;times_for_days&gt; }
+</td>
+<td>[<a href="#rule3">3</a>]</td>
+</tr>
+
+<tr>
+<td rowspan="11">&lt;times_for_days&gt;</td>
+<td>
+<q>24/7</q>
+</td>
+<td rowspan="2">→ open</td>
+</tr>
+
+<tr>
+<td>
+<q>open</q> <span class="comment">[ &lt;comment&gt; ]</span>
+</td>
+</tr>
+
+<tr>
+<td>
+<q>closed</q> <span class="comment">[ &lt;comment&gt; ]</span>
+</td>
+<td>→ closed</td>
+</tr>
+
+<tr>
+<td>
+<q>unknown</q> <span class="comment">[ &lt;comment&gt; ]</span>
+</td>
+<td rowspan="2">→ unknown</td>
+</tr>
+
+<tr>
+<td>
+<span class="comment">&lt;comment&gt;</span>
+</td>
+</tr>
+
+<tr>
+<td>
+<span class="days">&lt;day_list&gt;</span> <q>off</q>
+</td>
+<td>→ closed</td>
+</tr>
+
+<tr>
+<td>
+[ <span class="days">&lt;day_list&gt;</span> ] <span class="times">&lt;times&gt;</span>
+</td>
+<td rowspan="2">→ open</td>
+</tr>
+
+<tr>
+<td>
+[ <span class="days">&lt;day_list&gt;</span> ] <span class="times">&lt;times&gt;</span> <q>open</q> <span class="comment">[ &lt;comment&gt; ]</span>
+</td>
+</tr>
+
+<tr>
+<td>
+[ <span class="days">&lt;day_list&gt;</span> ] <span class="times">&lt;times&gt;</span> <q>closed</q> <span class="comment">[ &lt;comment&gt; ]</span>
+</td>
+<td>→ closed</td>
+</tr>
+
+<tr>
+<td>
+[ <span class="days">&lt;day_list&gt;</span> ] <span class="times">&lt;times&gt;</span> <q>unknown</q> <span class="comment">[ &lt;comment&gt; ]</span>
+</td>
+<td rowspan="2">→ unknown</td>
+</tr>
+
+<tr>
+<td>
+[ <span class="days">&lt;day_list&gt;</span> ] <span class="times">&lt;times&gt;</span> <span class="comment">&lt;comment&gt;</span>
+</td>
+</tr>
+
+</tbody>
+
+<tbody class="days">
+
+<tr><th colspan="3" style="text-align: center"><code>Days</code></th></tr>
+
+<tr>
+<td rowspan="1">&lt;day_list&gt;</td>
+<td>
+&lt;day_or_days&gt; { <q>,</q> &lt;day_or_days&gt; }
+</td>
+<td>or</td>
+</tr>
+
+<tr>
+<td rowspan="2">&lt;day_or_days&gt;</td>
+<td>
+<span class="weeks">[ &lt;weeks&gt; ]</span> { &lt;holiday&gt; } &lt;days&gt;
+</td>
+<td rowspan="2"></td>
+</tr>
+
+<tr>
+<td>
+<span class="weeks">[ &lt;weeks&gt; ]</span> { &lt;holiday&gt; } &lt;holiday&gt; [ <q>±</q> &lt;number&gt; <q>days</q> ]
+</td>
+</tr>
+
+<tr>
+<td>&lt;holiday&gt;</td>
+<td>
+<q>SH</q> | <q>PH</q> </td>
+<td rowspan="1"></td>
+</tr>
+
+<tr>
+<td rowspan="6">&lt;days&gt;</td>
+<td>
+&lt;wday&gt;
+</td>
+<td rowspan="5">[<a href="#rule4">4</a>]</td>
+</tr>
+
+<tr>
+<td>
+&lt;wday&gt; <q>-</q> &lt;wday&gt;
+</td>
+</tr>
+
+<tr>
+<td>
+&lt;wday&gt; <q>[</q> &lt;nth_entry&gt; { <q>,</q> &lt;nth_entry&gt; } <q>]</q>
+</td>
+</tr>
+
+<tr>
+<td>
+&lt;mday&gt;
+</td>
+</tr>
+
+<tr>
+<td>
+&lt;mday&gt; <q>-</q> &lt;mday&gt;
+</td>
+</tr>
+
+<tr>
+<td>
+&lt;mday&gt; <q>-</q> &lt;mday&gt; <q>/</q> &lt;number&gt;
+</td>
+<td>[<a href="#rule5">5</a>]</td>
+</tr>
+
+<tr>
+<td rowspan="3">&lt;nth_entry&gt;</td>
+<td>
+&lt;nth&gt;
+</td>
+<td rowspan="3"></td>
+</tr>
+
+<tr>
+<td>
+&lt;nth&gt; <q>-</q> &lt;nth&gt;
+</td>
+</tr>
+
+<tr>
+<td>
+<q>-</q> &lt;nth&gt;
+</td>
+</tr>
+
+<tr>
+<td>&lt;nth&gt;</td>
+<td>
+<q>1</q> | <q>2</q> | <q>3</q> | <q>4</q> | <q>5</q>
+</td>
+<td></td>
+</tr>
+
+</tbody>
+
+<tbody class="weeks">
+
+<tr>
+<td>&lt;weeks&gt;</td>
+<td>
+<q>week</q> &lt;week&gt; { <q>,</q> &lt;week&gt; }
+</td>
+<td>or</td>
+</tr>
+
+<tr>
+<td rowspan="3">&lt;week&gt;</td>
+<td>
+&lt;weeknum&gt;
+</td>
+<td rowspan="2"></td>
+</tr>
+
+<tr>
+<td>
+&lt;weeknum&gt; <q>-</q> &lt;weeknum&gt;
+</td>
+</tr>
+
+<tr>
+<td>
+&lt;weeknum&gt; <q>-</q> &lt;weeknum&gt; <q>/</q> &lt;number&gt;
+</td>
+<td>[<a href="#rule5">5</a>]</td>
+</tr>
+
+</tbody>
+
+<tbody class="times">
+
+<tr><th colspan="3" style="text-align: center"><code>Times</code></th></tr>
+
+<tr>
+<td rowspan="1">&lt;times&gt;</td>
+<td>
+&lt;timespan&gt; { <q>,</q> &lt;timespan&gt; }
+</td>
+<td>or</td>
+</tr>
+
+<tr>
+<td rowspan="6">&lt;timespan&gt;</td>
+<td>
+&lt;time&gt;
+</td>
+<td></td>
+</tr>
+
+<tr>
+<td>
+&lt;time&gt; <q>+</q>
+</td>
+<td>[<a href="#rule6">6</a>]</td>
+</tr>
+
+<tr>
+<td>
+&lt;time&gt; <q>-</q> &lt;time&gt;
+</td>
+<td rowspan="2">[<a href="#rule7">7</a>]</td>
+</tr>
+
+<tr>
+<td>
+&lt;time&gt; <q>-</q> &lt;time&gt; <q>+</q>
+</td>
+</tr>
+
+<tr>
+<td>
+&lt;time&gt; <q>-</q> &lt;time&gt; <q>/</q> &lt;minute&gt;
+</td>
+<td rowspan="2">[<a href="#rule8">8</a>]</td>
+</tr>
+
+<tr>
+<td>
+&lt;time&gt; <q>-</q> &lt;time&gt; <q>/</q> &lt;hour_minutes&gt;
+</td>
+</tr>
+
+<tr>
+<td>&lt;time&gt;</td>
+<td>
+&lt;hour_minutes&gt; | &lt;variable_time&gt;
+</td>
+<td></td>
+</tr>
+
+<tr>
+<td rowspan="3">&lt;variable_time&gt;</td>
+<td>
+&lt;event&gt;
+</td>
+<td rowspan="4"></td>
+</tr>
+
+<tr>
+<td>
+&lt;event&gt; <q>+</q> &lt;hour_minutes&gt; <q>hours</q>
+</td>
+</tr>
+
+<tr>
+<td>
+&lt;event&gt; <q>-</q> &lt;hour_minutes&gt; <q>hours</q>
+</td>
+</tr>
+
+<tr>
+<td>&lt;event&gt;</td>
+<td>
+<q>sunrise</q> | <q>sunset</q> | …
+</td>
+</tr>
+
+</tbody>
+
+<tbody class="calendar">
+
+<tr><th colspan="3" style="text-align: center"><code>Calendar</code></th></tr>
+
+<tr>
+<td rowspan="2">&lt;calendar_ranges&gt;</td>
+<td>
+&lt;calendar_days&gt; { <q>,</q> &lt;calendar_days&gt; }
+</td>
+<td>or</td>
+</tr>
+
+<tr>
+<td>
+&lt;comment&gt;
+</td>
+<td>[<a href="#rule9">9</a>]</td>
+</tr>
+
+<tr>
+<td rowspan="7">&lt;calendar_days&gt;</td>
+<td>
+[ &lt;year&gt; ] &lt;month&gt;
+</td>
+<td rowspan="2"></td>
+</tr>
+
+<tr>
+<td>
+[ &lt;year&gt; ] &lt;month&gt; <q>-</q> &lt;month&gt;
+</td>
+</tr>
+
+<tr>
+<td>
+[ &lt;year&gt; ] <q>summer</q>
+</td>
+<td rowspan="2">[<a href="#rule10">10</a>]</td>
+</tr>
+
+<tr>
+<td>
+[ &lt;year&gt; ] <q>winter</q>
+</td>
+</tr>
+
+<tr>
+<td>
+&lt;date_with_offsets&gt;
+</td>
+<td>[<a href="#rule11">11</a>]</td>
+</tr>
+
+<tr>
+<td>
+&lt;date_with_offsets&gt; <q>+</q>
+</td>
+<td>[<a href="#rule12">12</a>]</td>
+</tr>
+
+<tr>
+<td>
+&lt;date_with_offsets&gt; <q>-</q> &lt;date_with_offsets&gt;
+</td>
+<td>[<a href="#rule13">13</a>]</td>
+</tr>
+
+<tr>
+<td>&lt;date_with_offsets&gt;</td>
+<td>
+&lt;date&gt; [ <q>±</q> &lt;wday&gt; ] [ <q>±</q> &lt;number&gt; <q>days</q> ]
+</td>
+<td>[<a href="#rule14">14</a>]</td>
+</tr>
+
+<tr>
+<td rowspan="4">&lt;date&gt;</td>
+<td>
+[ &lt;year&gt; ] &lt;month&gt; &lt;daynum&gt;
+</td>
+<td rowspan="3"></td>
+</tr>
+
+<tr>
+<td>
+[ &lt;year&gt; ] &lt;month&gt; &lt;wday&gt; <q>[</q> [<q>-</q>] &lt;nth&gt; <q>]</q>
+</td>
+</tr>
+
+<tr>
+<td>
+[ &lt;year&gt; ] &lt;variable_date&gt;
+</td>
+</tr>
+
+<tr>
+<td>
+&lt;daynum&gt;
+</td>
+<td>[<a href="#rule15">15</a>]</td>
+</tr>
+
+<tr>
+<td>&lt;variable_date&gt;</td>
+<td>
+<q>easter</q> | …
+</td>
+<td rowspan="1"></td>
+</tr>
+
+</tbody>
+
+<tbody>
+
+<tr><th colspan="3" style="text-align: center">Basic elements</th></tr>
+
+<tr>
+<td>&lt;wday&gt;</td>
+<td>
+<q>Su</q>&nbsp;| <q>Mo</q>&nbsp;| <q>Tu</q>&nbsp;| <q>We</q>&nbsp;| <q>Th</q>&nbsp;| <q>Fr</q>&nbsp;| <q>Sa</q>
+</td>
+<td rowspan="2"></td>
+</tr>
+
+<tr>
+<td>&lt;weeknum&gt;</td>
+<td>
+<q>01</q>&nbsp;| <q>02</q>&nbsp;| <q>03</q>&nbsp;| <q>04</q>&nbsp;| <q>05</q>&nbsp;| <q>06</q>&nbsp;| <q>07</q>&nbsp;| <q>08</q>&nbsp;|
+<q>09</q>&nbsp;| <q>10</q>&nbsp;| <q>11</q>&nbsp;| <q>12</q>&nbsp;| <q>13</q>&nbsp;| <q>14</q>&nbsp;| <q>15</q>&nbsp;| <q>16</q>&nbsp;|
+<q>17</q>&nbsp;| <q>18</q>&nbsp;| <q>19</q>&nbsp;| <q>20</q>&nbsp;| <q>21</q>&nbsp;| <q>22</q>&nbsp;| <q>23</q>&nbsp;| <q>24</q>&nbsp;|
+<q>25</q>&nbsp;| <q>26</q>&nbsp;| <q>27</q>&nbsp;| <q>28</q>&nbsp;| <q>29</q>&nbsp;| <q>30</q>&nbsp;| <q>31</q>&nbsp;| <q>32</q>&nbsp;|
+<q>33</q>&nbsp;| <q>34</q>&nbsp;| <q>35</q>&nbsp;| <q>36</q>&nbsp;| <q>37</q>&nbsp;| <q>38</q>&nbsp;| <q>39</q>&nbsp;| <q>40</q>&nbsp;|
+<q>41</q>&nbsp;| <q>42</q>&nbsp;| <q>43</q>&nbsp;| <q>44</q>&nbsp;| <q>45</q>&nbsp;| <q>46</q>&nbsp;| <q>47</q>&nbsp;| <q>48</q>&nbsp;|
+<q>49</q>&nbsp;| <q>50</q>&nbsp;| <q>51</q>&nbsp;| <q>52</q>&nbsp;| <q>53</q>
+</td>
+</tr>
+
+<tr>
+<td>&lt;month&gt;</td>
+<td>
+<q>Jan</q>&nbsp;| <q>Feb</q>&nbsp;| <q>Mar</q>&nbsp;| <q>Apr</q>&nbsp;|
+<q>May</q>&nbsp;| <q>Jun</q>&nbsp;| <q>Jul</q>&nbsp;| <q>Aug</q>&nbsp;|
+<q>Sep</q>&nbsp;| <q>Oct</q>&nbsp;| <q>Nov</q>&nbsp;| <q>Dec</q>
+</td>
+<td rowspan="3"></td>
+</tr>
+
+<tr>
+<td>&lt;daynum&gt;</td>
+<td>
+<q>01</q>&nbsp;| <q>02</q>&nbsp;| <q>03</q>&nbsp;| <q>04</q>&nbsp;| <q>05</q>&nbsp;| <q>06</q>&nbsp;| <q>07</q>&nbsp;| <q>08</q>&nbsp;|
+<q>09</q>&nbsp;| <q>10</q>&nbsp;| <q>11</q>&nbsp;| <q>12</q>&nbsp;| <q>13</q>&nbsp;| <q>14</q>&nbsp;| <q>15</q>&nbsp;| <q>16</q>&nbsp;|
+<q>17</q>&nbsp;| <q>18</q>&nbsp;| <q>19</q>&nbsp;| <q>20</q>&nbsp;| <q>21</q>&nbsp;| <q>22</q>&nbsp;| <q>23</q>&nbsp;| <q>24</q>&nbsp;|
+<q>25</q>&nbsp;| <q>26</q>&nbsp;| <q>27</q>&nbsp;| <q>28</q>&nbsp;| <q>29</q>&nbsp;| <q>30</q>&nbsp;| <q>31</q>
+</td>
+</tr>
+
+<tr>
+<td>&lt;mday&gt;</td>
+<td>
+<q>01.</q>&nbsp;| <q>02.</q>&nbsp;| <q>03.</q>&nbsp;| <q>04.</q>&nbsp;| <q>05.</q>&nbsp;| <q>06.</q>&nbsp;| <q>07.</q>&nbsp;|
+<q>08.</q>&nbsp;| <q>09.</q>&nbsp;| <q>10.</q>&nbsp;| <q>11.</q>&nbsp;| <q>12.</q>&nbsp;| <q>13.</q>&nbsp;| <q>14.</q>&nbsp;|
+<q>15.</q>&nbsp;| <q>16.</q>&nbsp;| <q>17.</q>&nbsp;| <q>18.</q>&nbsp;| <q>19.</q>&nbsp;| <q>20.</q>&nbsp;| <q>21.</q>&nbsp;|
+<q>22.</q>&nbsp;| <q>23.</q>&nbsp;| <q>24.</q>&nbsp;| <q>25.</q>&nbsp;| <q>26.</q>&nbsp;| <q>27.</q>&nbsp;| <q>28.</q>&nbsp;|
+<q>29.</q>&nbsp;| <q>30.</q>&nbsp;| <q>31.</q>
+</td>
+</tr>
+
+<tr>
+<td>&lt;hour_minutes&gt;</td>
+<td>
+&lt;hour&gt;<q>:</q>&lt;minute&gt;
+</td>
+<td rowspan="3"></td>
+</tr>
+
+<tr>
+<td>&lt;hour&gt;</td>
+<td>
+<q>00</q> | <q>01</q> | <q>02</q> | <q>03</q> | <q>04</q> | <q>05</q> | <q>06</q> | <q>07</q> |
+<q>08</q> | <q>09</q> | <q>10</q> | <q>11</q> | <q>12</q> | <q>13</q> | <q>14</q> | <q>15</q> |
+<q>16</q> | <q>17</q> | <q>18</q> | <q>19</q> | <q>20</q> | <q>21</q> | <q>22</q> | <q>23</q> |
+<q>24</q>
+</td>
+</tr>
+
+<tr>
+<td>&lt;minute&gt;</td>
+<td>
+<q>00</q> | <q>01</q> | <q>02</q> | <q>03</q> | <q>04</q> | <q>05</q> |
+<q>06</q> | <q>07</q> | <q>08</q> | <q>09</q> | <q>10</q> | <q>11</q> |
+<q>12</q> | <q>13</q> | <q>14</q> | <q>15</q> | <q>16</q> | <q>17</q> |
+<q>18</q> | <q>19</q> | <q>20</q> | <q>21</q> | <q>22</q> | <q>23</q> |
+<q>24</q> | <q>25</q> | <q>26</q> | <q>27</q> | <q>28</q> | <q>29</q> |
+<q>30</q> | <q>31</q> | <q>32</q> | <q>33</q> | <q>34</q> | <q>35</q> |
+<q>36</q> | <q>37</q> | <q>38</q> | <q>39</q> | <q>40</q> | <q>41</q> |
+<q>42</q> | <q>43</q> | <q>44</q> | <q>45</q> | <q>46</q> | <q>47</q> |
+<q>48</q> | <q>49</q> | <q>50</q> | <q>51</q> | <q>52</q> | <q>53</q> |
+<q>54</q> | <q>55</q> | <q>56</q> | <q>57</q> | <q>58</q> | <q>59</q> |
+<q>60</q>
+</td>
+</tr>
+
+<tr>
+<td>&lt;comment&gt;</td>
+<td>
+<q>"</q> {Any character except <q>"</q> and <q>;</q>} <q>"</q>
+</td>
+<td></td>
+</tr>
+
+</tbody>
+</table>
+
+<ol>
+
+<li id="rule1">
+Groups are evaluated from left to right, until one group evaluates to <q>open</q>.
+<p>
+In discussion <q>!</q> was proposed as <q>not</q> operator;
+obviously intended was a <q>shortcut-or</q>.
+<br>
+Tentatively I introduces <q>||</q>:
+one will not type it by chance, it exhibits the cut very good,
+and every programmer will understand it immediately.
+</p>
+</li>
+
+<li id="rule2">
+A <code>basic_rule</code> is applicable to a day on a all-or-nothing base.
+The result of evaluating a <code>rule_sequenz</code> is the result of the <em>last</em> rule,
+which is applicable to the particular day.
+</li>
+
+<li id="rule3">
+The components of a <code>basic_rule</code> are additive:
+the comma between the components is read as <q>and also</q>.
+</li>
+
+<li id="rule4">
+<q><code>Su</code></q> represents all sundays,
+<q><code>Su[1]</code></q> represents the first sunday of a month,
+<q><code>Su[-1]</code></q> represents the last sunday of a month.
+</li>
+
+<li id="rule5">
+This notation is borrowed from
+<a rel="external" href="http://en.wikipedia.org/wiki/Cron#CRON_expression"><code>cron</code></a>
+and enables to express <q>in even weeks</q> or <q>on odd days</q>.
+</li>
+
+<li id="rule6">
+<q>Open end</q>:
+the opening time <em>starts</em> at the given time with <q>open end</q>.
+This kind of indication is used quite often; but of course it is impossible to evaluate it verbatim.
+I evaluate this notation as <q>plus 4 hours, but no later than midnight</q>.
+</li>
+
+<li id="rule7">
+If the second time is <em>earlier</em> then the first one, it is assumed to be on the next day.<br>
+The codition evals to <em>true</em>, if <em>first time</em> ≤ <em>particular time</em> &lt; <em>last time</em> holds.
+</li>
+
+<li id="rule8">
+This notation describes a repeated event:
+<q><code>10:00-16:00/90</code></q>
+and
+<q><code>10:00-16:00/1:30</code></q>
+are evaluated as <q>from ten am to four pm every 1½ hours</q>.
+Especially departure times can be written very concise and compact using this notation.
+The interval time following the <q>/</q> is valid but ignored for opening_hours.
+</li>
+
+<li id="rule9">
+Sometimes you cannot (yet) specify exactly the valid calendar days.<br>
+In this case you can use plain text in a comment followed by <q>:</q> .
+</li>
+
+<li id="rule10">
+Calendar ranges were specified by <q>summer</q> and <q>winter</q> quite often.<br>
+I evaluate <q>summer</q> to <q>May-Oct</q> and <q>winter</q> to <q>Nov-Apr</q>.
+</li>
+
+<li id="rule11">
+Evaluates to <code>true</code> of the date to check equals this day, to <code>false</code> otherwise.
+</li>
+
+<li id="rule12">
+<q>Until further notice</q>: the calendar range starts at this date and has no upper limit.
+</li>
+
+<li id="rule13">
+Evaluates to <code>true</code>, if <em>from-date</em> ≤ <em>day-to-check</em> ≤ <em>to-date</em> holds.
+Evaluates to <code>true</code>, if <em>from-date</em> &gt; <em>to-date</em> holds, year is <em>not</em> specified and
+either <em>day-to-check</em> ≤ <em>from-date</em> or <em>day-to-check</em> ≧ <em>to-date</em> holds.
+Evaluates to <code>false</code> otherwise.
+</li>
+
+<li id="rule14">
+Given any calendar day,
+the notation <q><code>+&nbsp;Su</code></q> selectes the <em>first</em> Sunday <em>after</em> this calendar day,
+the notation <q><code>-&nbsp;Su</code></q> selectes the <em>last</em> Sunday <em>before</em> this calendar day.
+</li>
+
+<li id="rule15">
+A day missing a month is assumed to refer to the last month found before.
+</li>
+
+</ol><div id="Xm">
+<hr>
+<a href="http://www.netzwolf.info/e/http/creativecommons.org/licenses/by-sa/3.0/de/deed.en" rel="license"><img alt="license: by-sa" src="Grammar%20for%20time%20domain%20values_files/by-sa80x15.png"></a>&nbsp;2010-2013 – modified on 2010-12-17
+</div>
+</div>
+
+<div id="Xd">
+Consumer information: contains
+<a href="http://validator.w3.org/check?verbose=1&amp;outline=1&amp;uri=http%3A%2F%2Fwww.netzwolf.info%2Fen%2Fcartography%2Fosm%2Ftime_domain%2Fspecification" rel="nofollow">XHTML1.0</a>,
+<a href="http://jigsaw.w3.org/css-validator/validator?uri=http%3A%2F%2Fwww.netzwolf.info%2Fen%2Fcartography%2Fosm%2Ftime_domain%2Fspecification&amp;warning=no" rel="nofollow">CSS</a>
+and an <a href="http://www.netzwolf.info/_meta/anbieterkennzeichnung" rel="nofollow" lang="de">Anbieterkennzeichnung</a>.
+<br>
+</div>
+
+<div class="Xn">
+
+<hr>
+<h2>Navigation</h2>
+
+<div id="Xntpls">
+<div id="Xnpls">
+
+<div id="Xnp"><h3>Seitenhierarchie</h3>
+<ul>
+<li class="X1"><a href="http://www.netzwolf.info/" rel="start">Netzwolf</a></li>
+<li><a href="http://www.netzwolf.info/en/cartography/osm/time_domain/">time domain (english)</a></li>
+<li><span class="Xs">Specification</span></li>
+</ul>
+</div>
+
+<div id="Xnls">
+</div>
+</div>
+</div>
+</div>
+
+
+</div></body></html>
